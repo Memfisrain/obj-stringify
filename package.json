@@ -1,0 +1,32 @@
+{
+  "name": "obj-stringify",
+  "version": "1.0.0",
+  "description": "Performs deep serialization of object to string. With configurable depth and indent size.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "expect.js": "^0.3.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/*.js"
+  },
+  "keywords": [
+    "toString",
+    "object",
+    "to",
+    "string",
+    "stringify",
+    "deep",
+    "stringify",
+    "JSON",
+    "json.stringify",
+    "serialize"
+  ],
+  "author": "Nikita Kulazhenko",
+  "license": "ISC"
+}
