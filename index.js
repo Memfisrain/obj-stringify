@@ -13,7 +13,7 @@
   ];
 
   const DEFAULT_OPTIONS = {
-    indentSize: 2,
+    indent: 2,
     singleQuotes: true,
     depth: 1000
   };
@@ -57,7 +57,7 @@
   };
 
 
-  function convert(obj, options) {
+  function objStringify(obj, options) {
 
     options = Object.assign({}, DEFAULT_OPTIONS, options);
 
@@ -77,10 +77,10 @@
 
     if ( !isObjectOrArray(obj) ) {
       console.warn(`Passed arguments is not a plain object. It is an instance of ${ getType(obj) }. Trying fallback to JSON.stringify`)
-      return JSON.stringify(obj, '', options.indentSize);
+      return JSON.stringify(obj, '', options.indent);
     }
 
-    let converted = stringify( traverse( options.depth, 1, getCopy(obj, isPlainObject) ), options.indentSize );
+    let converted = stringify( traverse( options.depth, 1, getCopy(obj, isPlainObject) ), options.indent );
 
     if (options.inline) {
       converted = inline(converted);
@@ -96,15 +96,15 @@
 
   // export / expose
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = convert;
+    module.exports = objStringify;
   }
   else if (typeof define === 'function' && define.amd) {
     define([], function() {
-      return convert;
+      return objStringify;
     })
   }
   else {
-    env.convert = convert;
+    env.objStringify = objStringify;
   }
 
 }(this));
