@@ -36,7 +36,6 @@
   const isDate = (obj) => getType(obj) === 'Date';
 
   // replacers
-  const inline = (str) => str.replace(/\n/g, '');
   const replaceSingleQuotes = (str) => str.replace(/'/g, "\"");
   const replaceLineSymbols = (str) => {
     return str.replace(/\\n/g, "\n")
@@ -47,6 +46,7 @@
       .replace(/\\b/g, "\\b")
       .replace(/\\f/g, "\\f");
   };
+  const inline = (str) => str.replace(/\n/g, '');
 
 
   const traverse = (depth, acc, obj) => {
