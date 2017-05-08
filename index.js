@@ -14,8 +14,9 @@
 
   const DEFAULT_OPTIONS = {
     indent: 2,
-    singleQuotes: true,
-    depth: 1000
+    depth: 1000,
+    inline: false,
+    singleQuotes: true
   };
 
 
@@ -52,7 +53,7 @@
   const traverse = (depth, acc, obj) => {
     return isObjectOrArray(obj) && acc <= depth ? populate(obj, pluck(obj, traverse.bind(null, depth, acc + 1))) :
            isString(obj) || isDate(obj) ? "'" + obj + "'" :
-           isFunction(obj.toString) ? obj.toString() :
+           obj && isFunction(obj.toString) ? obj.toString() :
            obj;
   };
 
@@ -76,7 +77,7 @@
     }
 
     if ( !isObjectOrArray(obj) ) {
-      console.warn(`Passed arguments is not a plain object. It is an instance of ${ getType(obj) }. Trying fallback to JSON.stringify`)
+      console.warn(`Passed arguments is not a plain object. It is an instance of ${ getType(obj) }. Trying fallback to JSON.stringify`);
       return JSON.stringify(obj, '', options.indent);
     }
 
