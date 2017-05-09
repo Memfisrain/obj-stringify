@@ -29,7 +29,7 @@
   })
   ```
 
-  Finally if you don't use any module systems you can insert it via script tag and objStringify function would be accessible in global namespace.
+  Finally, if you don't use any module systems you can insert it via script tag and objStringify function would be accessible in global namespace.
   ```js
   // index.html
   <script src="node_modules/obj-strinfigy/index.js"></script>
