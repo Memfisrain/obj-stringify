@@ -22,10 +22,11 @@
 
   // utility
   const stringify = (obj, offset) => replaceLineSymbols( JSON.stringify(obj, '', offset) );
-  const getCopy = (obj, isObject) => isObject(obj) ? Object.assign({}, obj) : [...obj];
   const pluck = (obj, transformerFn) => (prop) => obj[prop] = transformerFn(obj[prop]);
   const populate = (obj, treatFn) => !Object.keys(obj).forEach(treatFn) && obj;
   const getType = (obj) => Object.prototype.toString.call(obj).slice(8, -1);
+  const getCopy = (obj) => isPlainObject(obj) ? Object.assign({}, obj) :
+                           Array.isArray(obj) ? [...obj] : obj;
 
   // testers
   const isPlainObject = (obj) => SUPPORTED_OBJECTS.includes( getType(obj) );
@@ -51,10 +52,12 @@
 
 
   const traverse = (depth, acc, obj) => {
-    return isObjectOrArray(obj) && acc <= depth ? populate(obj, pluck(obj, traverse.bind(null, depth, acc + 1))) :
-           isString(obj) || isDate(obj) ? "'" + obj + "'" :
-           obj && isFunction(obj.toString) ? obj.toString() :
-           obj;
+    const copy = getCopy(obj);
+
+    return isObjectOrArray(copy) && acc <= depth ? populate(copy, pluck(copy, traverse.bind(null, depth, acc + 1))) :
+           isString(copy) || isDate(copy) ? "'" + copy + "'" :
+           copy && isFunction(copy.toString) ? copy.toString() :
+           copy;
   };
 
 
@@ -81,7 +84,7 @@
       return JSON.stringify(obj, '', options.indent);
     }
 
-    let converted = stringify( traverse( options.depth, 1, getCopy(obj, isPlainObject) ), options.indent );
+    let converted = stringify( traverse( options.depth, 1, getCopy(obj) ), options.indent );
 
     if (options.inline) {
       converted = inline(converted);
