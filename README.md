@@ -22,8 +22,8 @@
 
   If you work with **RequireJS** module format:
   ```js
-  define('', [
-    'node_modules/obj-stringify/index.js'
+  define([
+    'node_modules/obj-stringify/index'
   ], function(objStringify) {
     ...
   })
